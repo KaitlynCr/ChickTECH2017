@@ -1,0 +1,33 @@
+.button-style {
+    background-color: blue;
+    width: 100px;
+    height: 60px;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.padding-bottom {
+    padding-bottom: 30px;
+}
+
+h1 {
+    font-size: 50px;
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    font-family: lucida;
+}
+
+p {
+    font-size: 14px;
+    text-align: center;
+    font-family: 'Lucida Sans';
+    color: orange;
+}
+
+body {
+    background-image: url('http://www.wujinshike.com/data/wallpapers/132/WDF_1740479.jpg')
+}
