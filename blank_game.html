@@ -28,6 +28,7 @@
 <script type="text/javascript">
 
     var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    var gameTime = 15;
     var score = 0;
     var scoreText;
     //These three functions are required for phaser!
@@ -43,8 +44,7 @@
     //Create sets up your game for you - most of your code will probably be here!
     function create() {
 
-        timer = game.time.create(false);
-        timer.start();
+ 
         //add the sky
         game.add.sprite(0, 0, 'bknd');
 
@@ -82,16 +82,15 @@
 
         apples.enableBody = true;
     //  Here we'll create 12 of them evenly spaced apart
-        timer.loop(1000, createApple);
     
         rocks = game.add.group();
 
         rocks.enableBody = true;
-        timer.loop(2000, createRock)
     //  Here we'll create 12 of them evenly spaced apart
-    
-    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    introText = game.add.text(300, 300, '-Click to Start-', { fontSize: '32px', fill: '#000' }); 
+    scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
 
+    game.input.onDown.add(startGame, this);
     }
 
     //Update is continously called while the game is being played - add things like
@@ -157,6 +156,15 @@ function collectRock (player, rock) {
         rock.kill();
     })
     }
+}
+function startGame(){
+    score = 0;
+    scoreText.text = 'Score: ' + score;
+    timer = game.time.create(false);
+    timer.start();
+    timer.loop(1000, createApple);
+    timer.loop(2000, createRock)
+    introText.visible = false;
 }
 function createApple (){
     //  Create a star inside of the 'stars' group
