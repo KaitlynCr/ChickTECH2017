@@ -147,6 +147,16 @@ function collectRock (player, rock) {
     rock.kill();
     score -= 30;
     scoreText.text = 'score: ' + score;
+    if(score <= 0){
+        timer.stop();
+        gameoverText = game.add.text(300, 300, 'Game Over', { fontSize: '32px', fill: '#000' });
+    apples.forEach(function(apple){
+        apple.kill();
+    })
+    rocks.forEach(function(rock){
+        rock.kill();
+    })
+    }
 }
 function createApple (){
     //  Create a star inside of the 'stars' group
