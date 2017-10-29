@@ -8,6 +8,20 @@
 
     <!--loading our CSS file-->
     <link rel="stylesheet" type="text/css" href="mystyle.css">
+<style>  
+    a:link {
+        color: red;
+    }
+    a:visited {
+        color:rgb(255, 115, 0);
+    }
+    a:hover {
+        color:greenyellow;
+    }
+    a:active {
+        color:blue;
+    }
+</style>
 </head>
 <body>
 
@@ -68,12 +82,12 @@
 
         apples.enableBody = true;
     //  Here we'll create 12 of them evenly spaced apart
-        timer.loop(700, createApple);
+        timer.loop(1000, createApple);
     
         rocks = game.add.group();
 
         rocks.enableBody = true;
-        timer.loop(3000, createRock)
+        timer.loop(2000, createRock)
     //  Here we'll create 12 of them evenly spaced apart
     
     scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -153,6 +167,7 @@ function createRock () {
         rock.body.bounce.y = 0.7 + Math.random() * 0.2;   
 }
 </script>
+<a href="index.html">Return to home page.</a>
 
 </body>
 </html>
