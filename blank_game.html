@@ -14,19 +14,23 @@
 <script type="text/javascript">
 
     var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-
+    var score = 0;
+    var scoreText;
     //These three functions are required for phaser!
     //Preload loads everything your game needs - sprites, images, etc
     function preload() {
         game.load.image('bknd', 'assets/bknd.png');
         game.load.image('ground', 'assets/platform.png');
+        game.load.image('apple', 'assets/apple.png')
+        game.load.image('rock', 'assets/rock.png')
         game.load.spritesheet('horse', 'assets/horse.png', 200, 127);
-
     }
 
     //Create sets up your game for you - most of your code will probably be here!
     function create() {
 
+        timer = game.time.create(false);
+        timer.start();
         //add the sky
         game.add.sprite(0, 0, 'bknd');
 
@@ -58,9 +62,21 @@
         player.animations.add('left', [1, 2, 3, 4, 5, 6, 7], 10, true);
         player.animations.add('right', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
 
-
         //  Our controls. 
         cursors = game.input.keyboard.createCursorKeys();
+        apples = game.add.group();
+
+        apples.enableBody = true;
+    //  Here we'll create 12 of them evenly spaced apart
+        timer.loop(700, createApple);
+    
+        rocks = game.add.group();
+
+        rocks.enableBody = true;
+        timer.loop(3000, createRock)
+    //  Here we'll create 12 of them evenly spaced apart
+    
+    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
     }
 
@@ -70,7 +86,7 @@
 
     //check if player is touching the platform - stops from falling through ground
     game.physics.arcade.collide(player, platforms);
-
+    
       //  Reset the players velocity (movement)
       player.body.velocity.x = 0;
 
@@ -98,12 +114,44 @@
 
             player.frame = 0;
         }
-
-    }
+    game.physics.arcade.overlap(player, apples, collectApple, null, this);
+    game.physics.arcade.overlap(player, rocks, collectRock, null, this);
+  }
 
     //add any extra functions you need here! 
+function collectApple (player, apple) {
 
+    // Removes the star from the screen
+    apple.kill();
+  //  Add and update the score
+     score += 10;
+    scoreText.text = 'score: ' + score;
+}
+function collectRock (player, rock) {
 
+    // Removes the star from the screen
+    rock.kill();
+    score -= 30;
+    scoreText.text = 'score: ' + score;
+}
+function createApple (){
+    //  Create a star inside of the 'stars' group
+    var xvalue = Math.random()* 800;
+    var apple = apples.create(xvalue, 0, 'apple');
+    console.log("inside createapple");
+
+    apple.body.gravity.y = 12;
+    apple.body.bounce.y = 0.7 + Math.random() * 0.2;
+}        
+function createRock () {
+    var xvalue = Math.random()* 800;
+    var rock = rocks.create(xvalue, 0, 'rock'); 
+        //  Let gravity do its thing
+        rock.body.gravity.y = 12;
+
+        //  This just gives each star a slightly random bounce value
+        rock.body.bounce.y = 0.7 + Math.random() * 0.2;   
+}
 </script>
 
 </body>
